@@ -20,7 +20,13 @@ const loadCategoryVideos = (id) => {
   // fetch
   fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
       .then((res) => res.json())
-      .then((data) => displayVideos(data.category))
+      .then((data) => {
+        removeActiveClass();
+
+        const activeBtn = document.getElementById(`btn-${id}`)
+        activeBtn.classList.add("active");
+        displayVideos(data.category)
+      })
       .catch((error) => console.log(error))
 }
 
@@ -43,24 +49,24 @@ const loadCategoryVideos = (id) => {
     });
   };
 
-  const demoObj = {
-    "category_id": "1003",
-    "video_id": "aaak",
-    "thumbnail": "https://i.ibb.co/ZNggzdm/cake.jpg",
-    "title": "Beyond The Pale",
-    "authors": [
-        {
-            "profile_picture": "https://i.ibb.co/MZ2vbXR/jimm.jpg",
-            "profile_name": "Jim Gaffigan",
-            "verified": false
-        }
-    ],
-    "others": {
-        "views": "2.6K",
-        "posted_date": "15400"
-    },
-    "description": "'Beyond The Pale' by Jim Gaffigan, with 2.6K views, is a comedic gem that explores everyday observations and family life with a light-hearted and witty approach. Jim's humor is accessible and delightful, making this show perfect for anyone who enjoys clean, observational comedy."
-}
+//   const demoObj = {
+//     "category_id": "1003",
+//     "video_id": "aaak",
+//     "thumbnail": "https://i.ibb.co/ZNggzdm/cake.jpg",
+//     "title": "Beyond The Pale",
+//     "authors": [
+//         {
+//             "profile_picture": "https://i.ibb.co/MZ2vbXR/jimm.jpg",
+//             "profile_name": "Jim Gaffigan",
+//             "verified": false
+//         }
+//     ],
+//     "others": {
+//         "views": "2.6K",
+//         "posted_date": "15400"
+//     },
+//     "description": "'Beyond The Pale' by Jim Gaffigan, with 2.6K views, is a comedic gem that explores everyday observations and family life with a light-hearted and witty approach. Jim's humor is accessible and delightful, making this show perfect for anyone who enjoys clean, observational comedy."
+// }
 
 function getTime(time) {
   const hour = parseInt(time / 3600);
@@ -69,6 +75,14 @@ function getTime(time) {
   remainingSec = remainingSec % 60;
 
   return `${hour} hrs ${min} min ${remainingSec} sec ago`;
+}
+
+const removeActiveClass = () =>{
+  const buttons = document.getElementsByClassName("category-btn");
+
+  for (let btn of buttons) {
+    btn.classList.remove("active");
+  }
 }
 
   const displayVideos = (videos) => {
