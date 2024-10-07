@@ -62,16 +62,26 @@ const loadVideos = () => {
       card.classList = "card card-compact";
       card.innerHTML = 
       `
-      <figure>
+      <figure class="h-[200px]">
         <img
           src=${video.thumbnail}
+          class="h-full w-full object-cover"
           alt="Shoes" />
       </figure>
-      <div class="card-body">
-        <h2 class="card-title">${video.title}</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div class="card-actions justify-end">
-          <button class="btn btn-primary">Buy Now</button>
+      <div class="px-0 py-2 flex gap-4">
+        <div>
+          <img class="h-10 w-10 rounded-full object-cover" src=${video.authors[0].profile_picture} />
+        </div>
+        <div>
+          <h2 class="font-bold">${video.title}</h2>
+          <div class="flex item-center gap-2">
+            <p class="text-gray-400">${video.authors[0].profile_name}</p>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 bg-blue-500 rounded-full text-white">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+            </svg>
+
+          </div>
+          <p></p>
         </div>
       </div>
       `;
