@@ -74,6 +74,21 @@ function getTime(time) {
   const displayVideos = (videos) => {
     const videoContainer = document.getElementById('videos');
     videoContainer.innerHTML="";
+
+    if (videos.length == 0) {
+      videoContainer.classList.remove('grid');
+      videoContainer.innerHTML=`
+      <div class="min-h-[400px] w-full flex flex-col gap-5 justify-center items-center">
+        <img src="img/icon.png"/>
+        <h6 class="font-bold text-5xl text-center">Oops! Sorry, There is no <br>content here</h6>
+      </div>
+      `;
+      return;
+    }
+    else{
+      videoContainer.classList.add('grid');
+    }
+
     videos.forEach( (video) => {
       console.log(video);
       const card = document.createElement('div');
