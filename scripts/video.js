@@ -7,9 +7,9 @@ const loadCategories = () => {
       .then((data) => displayCategories(data.categories))
       .catch((error) => console.log(error))
   };
-const loadVideos = () => {
+const loadVideos = (searchText = "") => {
     //fetch the data
-    fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`)
       .then((res) => res.json())
       .then((data) => displayVideos(data.videos))
       .catch((error) => console.log(error))
@@ -77,6 +77,30 @@ function getTime(time) {
   return `${hour} hrs ${min} min ${remainingSec} sec ago`;
 }
 
+const loadDetails = async(videoId) => {
+  console.log(videoId);
+  const uri = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`;
+  const res = await fetch(uri);
+  const data = await res.json();
+  displayDetails(data.video);
+}
+
+const displayDetails = (video) => {
+  console.log(video);
+  const detailContainer = document.getElementById('modal-content');
+
+  detailContainer.innerHTML = `
+    <img src=${video.thumbnail}/>
+    <p>${video.description}</p>
+  `
+
+  // Way-1
+  // document.getElementById('showModalData').click();
+
+  // Way-2
+  document.getElementById('customModal').showModal();
+}
+
 const removeActiveClass = () =>{
   const buttons = document.getElementsByClassName("category-btn");
 
@@ -133,7 +157,7 @@ const removeActiveClass = () =>{
               </svg>` : ""}
 
           </div>
-          <p></p>
+          <p><button onclick="loadDetails('${video.video_id}')" class="btn btn-sm btn-error">Details</button></p>
         </div>
       </div>
       `;
@@ -142,6 +166,10 @@ const removeActiveClass = () =>{
     })
   }
   
+
+document.getElementById('search-input').addEventListener("keyup", (e)=>{
+  loadVideos(e.target.value);
+})
 
   loadCategories()
   loadVideos()
